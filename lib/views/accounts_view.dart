@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orq_poc/widgets/account_title.dart';
+import 'package:orq_poc/widgets/account_tile.dart';
 
 class AccountsView extends StatefulWidget {
   @override

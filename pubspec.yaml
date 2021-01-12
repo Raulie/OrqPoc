@@ -25,6 +25,11 @@ dependencies:
     sdk: flutter
   aws_appsync: ^0.1.0
   provider: ^4.3.2+3
+  http: ^0.12.2
+  graphql_flutter: ^3.1.0
+  progress_state_button: ^1.0.2
+
+
 
 
   # The following adds the Cupertino Icons font to your application.

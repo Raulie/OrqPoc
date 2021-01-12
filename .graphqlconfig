@@ -1,0 +1,15 @@
+{
+  "name": "Schema",
+  "schemaPath": "my.schema.json",
+  "extensions": {
+    "endpoints": {
+      "Default": {
+        "url": "https://veplnlc5cfdbpb36oyeyox446e.appsync-api.us-east-1.amazonaws.com/graphql",
+        "introspect": true,
+        "headers": {
+          "x-api-key": "da2-yk77rh6najgwpg3lgkhty3t2gi"
+        }
+      }
+    }
+  }
+}

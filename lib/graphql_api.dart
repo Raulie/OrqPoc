@@ -7,169 +7,108 @@ import 'package:gql/ast.dart';
 part 'graphql_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class CustomersData with EquatableMixin {
-  CustomersData();
+class Login with EquatableMixin {
+  Login();
 
-  factory CustomersData.fromJson(Map<String, dynamic> json) =>
-      _$CustomersDataFromJson(json);
+  factory Login.fromJson(Map<String, dynamic> json) => _$LoginFromJson(json);
 
-  ModelCustomerConnection listCustomers;
+  Session login;
 
   @override
-  List<Object> get props => [listCustomers];
-  Map<String, dynamic> toJson() => _$CustomersDataToJson(this);
+  List<Object> get props => [login];
+  Map<String, dynamic> toJson() => _$LoginToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class ModelCustomerConnection with EquatableMixin {
-  ModelCustomerConnection();
+class Session with EquatableMixin {
+  Session();
 
-  factory ModelCustomerConnection.fromJson(Map<String, dynamic> json) =>
-      _$ModelCustomerConnectionFromJson(json);
-
-  List<Customer> items;
-
-  @override
-  List<Object> get props => [items];
-  Map<String, dynamic> toJson() => _$ModelCustomerConnectionToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Customer with EquatableMixin {
-  Customer();
-
-  factory Customer.fromJson(Map<String, dynamic> json) =>
-      _$CustomerFromJson(json);
-
-  String id;
-
-  String name;
-
-  String lasName;
-
-  String email;
-
-  ModelAccountConnection accounts;
-
-  @override
-  List<Object> get props => [id, name, lasName, email, accounts];
-  Map<String, dynamic> toJson() => _$CustomerToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class ModelAccountConnection with EquatableMixin {
-  ModelAccountConnection();
-
-  factory ModelAccountConnection.fromJson(Map<String, dynamic> json) =>
-      _$ModelAccountConnectionFromJson(json);
-
-  List<Account> items;
-
-  @override
-  List<Object> get props => [items];
-  Map<String, dynamic> toJson() => _$ModelAccountConnectionToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Account with EquatableMixin {
-  Account();
-
-  factory Account.fromJson(Map<String, dynamic> json) =>
-      _$AccountFromJson(json);
-
-  int balance;
+  factory Session.fromJson(Map<String, dynamic> json) =>
+      _$SessionFromJson(json);
 
   String id;
 
   @override
-  List<Object> get props => [balance, id];
-  Map<String, dynamic> toJson() => _$AccountToJson(this);
+  List<Object> get props => [id];
+  Map<String, dynamic> toJson() => _$SessionToJson(this);
 }
 
-class CustomersDataQuery extends GraphQLQuery<CustomersData, JsonSerializable> {
-  CustomersDataQuery();
+@JsonSerializable(explicitToJson: true)
+class UserLoginInput with EquatableMixin {
+  UserLoginInput();
+
+  factory UserLoginInput.fromJson(Map<String, dynamic> json) =>
+      _$UserLoginInputFromJson(json);
+
+  String username;
+
+  String password;
+
+  @override
+  List<Object> get props => [username, password];
+  Map<String, dynamic> toJson() => _$UserLoginInputToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LoginArguments extends JsonSerializable with EquatableMixin {
+  LoginArguments({this.input});
+
+  factory LoginArguments.fromJson(Map<String, dynamic> json) =>
+      _$LoginArgumentsFromJson(json);
+
+  final UserLoginInput input;
+
+  @override
+  List<Object> get props => [input];
+  Map<String, dynamic> toJson() => _$LoginArgumentsToJson(this);
+}
+
+class LoginQuery extends GraphQLQuery<Login, LoginArguments> {
+  LoginQuery({this.variables});
 
   @override
   final DocumentNode document = DocumentNode(definitions: [
     OperationDefinitionNode(
-        type: OperationType.query,
-        name: NameNode(value: 'CustomersData'),
-        variableDefinitions: [],
+        type: OperationType.mutation,
+        name: NameNode(value: 'Login'),
+        variableDefinitions: [
+          VariableDefinitionNode(
+              variable: VariableNode(name: NameNode(value: 'input')),
+              type: NamedTypeNode(
+                  name: NameNode(value: 'UserLoginInput'), isNonNull: true),
+              defaultValue: DefaultValueNode(value: null),
+              directives: [])
+        ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-              name: NameNode(value: 'listCustomers'),
+              name: NameNode(value: 'login'),
               alias: null,
-              arguments: [],
+              arguments: [
+                ArgumentNode(
+                    name: NameNode(value: 'input'),
+                    value: VariableNode(name: NameNode(value: 'input')))
+              ],
               directives: [],
               selectionSet: SelectionSetNode(selections: [
                 FieldNode(
-                    name: NameNode(value: 'items'),
+                    name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                          name: NameNode(value: 'id'),
-                          alias: null,
-                          arguments: [],
-                          directives: [],
-                          selectionSet: null),
-                      FieldNode(
-                          name: NameNode(value: 'name'),
-                          alias: null,
-                          arguments: [],
-                          directives: [],
-                          selectionSet: null),
-                      FieldNode(
-                          name: NameNode(value: 'lasName'),
-                          alias: null,
-                          arguments: [],
-                          directives: [],
-                          selectionSet: null),
-                      FieldNode(
-                          name: NameNode(value: 'email'),
-                          alias: null,
-                          arguments: [],
-                          directives: [],
-                          selectionSet: null),
-                      FieldNode(
-                          name: NameNode(value: 'accounts'),
-                          alias: null,
-                          arguments: [],
-                          directives: [],
-                          selectionSet: SelectionSetNode(selections: [
-                            FieldNode(
-                                name: NameNode(value: 'items'),
-                                alias: null,
-                                arguments: [],
-                                directives: [],
-                                selectionSet: SelectionSetNode(selections: [
-                                  FieldNode(
-                                      name: NameNode(value: 'balance'),
-                                      alias: null,
-                                      arguments: [],
-                                      directives: [],
-                                      selectionSet: null),
-                                  FieldNode(
-                                      name: NameNode(value: 'id'),
-                                      alias: null,
-                                      arguments: [],
-                                      directives: [],
-                                      selectionSet: null)
-                                ]))
-                          ]))
-                    ]))
+                    selectionSet: null)
               ]))
         ]))
   ]);
 
   @override
-  final String operationName = 'CustomersData';
+  final String operationName = 'Login';
 
   @override
-  List<Object> get props => [document, operationName];
+  final LoginArguments variables;
+
   @override
-  CustomersData parse(Map<String, dynamic> json) =>
-      CustomersData.fromJson(json);
+  List<Object> get props => [document, operationName, variables];
+  @override
+  Login parse(Map<String, dynamic> json) => Login.fromJson(json);
 }

@@ -4,10 +4,10 @@
   "extensions": {
     "endpoints": {
       "Default": {
-        "url": "https://veplnlc5cfdbpb36oyeyox446e.appsync-api.us-east-1.amazonaws.com/graphql",
+        "url": "https://son53jncvrfpzfdu7dblgvoxaa.appsync-api.us-east-1.amazonaws.com/graphql",
         "introspect": true,
         "headers": {
-          "x-api-key": "da2-yk77rh6najgwpg3lgkhty3t2gi"
+          "x-api-key": "da2-55inekev7bbytc523lr7lj2gku"
         }
       }
     }

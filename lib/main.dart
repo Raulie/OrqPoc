@@ -7,8 +7,8 @@ import 'package:orq_poc/views/login_view.dart';
 import 'package:orq_poc/views/query_view.dart';
 
 const graphqlEndpointUri =
-    'https://veplnlc5cfdbpb36oyeyox446e.appsync-api.us-east-1.amazonaws.com/graphql';
-const graphqlEndpointApiKey = 'da2-yk77rh6najgwpg3lgkhty3t2gi';
+    'https://son53jncvrfpzfdu7dblgvoxaa.appsync-api.us-east-1.amazonaws.com/graphql';
+const graphqlEndpointApiKey = 'da2-55inekev7bbytc523lr7lj2gku';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         title: 'AppSync vs Step Functions',
         initialRoute: '/',
         routes: {
-          '/': (context) => QueryView(),
+          '/': (context) => LoginView(),
           '/accounts': (context) => AccountsView(),
         },
         theme: ThemeData(

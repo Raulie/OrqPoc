@@ -6,76 +6,46 @@ part of 'graphql_api.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CustomersData _$CustomersDataFromJson(Map<String, dynamic> json) {
-  return CustomersData()
-    ..listCustomers = json['listCustomers'] == null
+Login _$LoginFromJson(Map<String, dynamic> json) {
+  return Login()
+    ..login = json['login'] == null
         ? null
-        : ModelCustomerConnection.fromJson(
-            json['listCustomers'] as Map<String, dynamic>);
+        : Session.fromJson(json['login'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$CustomersDataToJson(CustomersData instance) =>
-    <String, dynamic>{
-      'listCustomers': instance.listCustomers?.toJson(),
+Map<String, dynamic> _$LoginToJson(Login instance) => <String, dynamic>{
+      'login': instance.login?.toJson(),
     };
 
-ModelCustomerConnection _$ModelCustomerConnectionFromJson(
-    Map<String, dynamic> json) {
-  return ModelCustomerConnection()
-    ..items = (json['items'] as List)
-        ?.map((e) =>
-            e == null ? null : Customer.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+Session _$SessionFromJson(Map<String, dynamic> json) {
+  return Session()..id = json['id'] as String;
 }
 
-Map<String, dynamic> _$ModelCustomerConnectionToJson(
-        ModelCustomerConnection instance) =>
-    <String, dynamic>{
-      'items': instance.items?.map((e) => e?.toJson())?.toList(),
+Map<String, dynamic> _$SessionToJson(Session instance) => <String, dynamic>{
+      'id': instance.id,
     };
 
-Customer _$CustomerFromJson(Map<String, dynamic> json) {
-  return Customer()
-    ..id = json['id'] as String
-    ..name = json['name'] as String
-    ..lasName = json['lasName'] as String
-    ..email = json['email'] as String
-    ..accounts = json['accounts'] == null
+UserLoginInput _$UserLoginInputFromJson(Map<String, dynamic> json) {
+  return UserLoginInput()
+    ..username = json['username'] as String
+    ..password = json['password'] as String;
+}
+
+Map<String, dynamic> _$UserLoginInputToJson(UserLoginInput instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+      'password': instance.password,
+    };
+
+LoginArguments _$LoginArgumentsFromJson(Map<String, dynamic> json) {
+  return LoginArguments(
+    input: json['input'] == null
         ? null
-        : ModelAccountConnection.fromJson(
-            json['accounts'] as Map<String, dynamic>);
+        : UserLoginInput.fromJson(json['input'] as Map<String, dynamic>),
+  );
 }
 
-Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'lasName': instance.lasName,
-      'email': instance.email,
-      'accounts': instance.accounts?.toJson(),
-    };
-
-ModelAccountConnection _$ModelAccountConnectionFromJson(
-    Map<String, dynamic> json) {
-  return ModelAccountConnection()
-    ..items = (json['items'] as List)
-        ?.map((e) =>
-            e == null ? null : Account.fromJson(e as Map<String, dynamic>))
-        ?.toList();
-}
-
-Map<String, dynamic> _$ModelAccountConnectionToJson(
-        ModelAccountConnection instance) =>
+Map<String, dynamic> _$LoginArgumentsToJson(LoginArguments instance) =>
     <String, dynamic>{
-      'items': instance.items?.map((e) => e?.toJson())?.toList(),
-    };
-
-Account _$AccountFromJson(Map<String, dynamic> json) {
-  return Account()
-    ..balance = json['balance'] as int
-    ..id = json['id'] as String;
-}
-
-Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
-      'balance': instance.balance,
-      'id': instance.id,
+      'input': instance.input?.toJson(),
     };

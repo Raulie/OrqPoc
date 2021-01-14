@@ -8,13 +8,13 @@ part of 'graphql_api.dart';
 
 Login _$LoginFromJson(Map<String, dynamic> json) {
   return Login()
-    ..login = json['login'] == null
+    ..loginArmando = json['loginArmando'] == null
         ? null
-        : Session.fromJson(json['login'] as Map<String, dynamic>);
+        : Session.fromJson(json['loginArmando'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$LoginToJson(Login instance) => <String, dynamic>{
-      'login': instance.login?.toJson(),
+      'loginArmando': instance.loginArmando?.toJson(),
     };
 
 Session _$SessionFromJson(Map<String, dynamic> json) {
@@ -46,6 +46,66 @@ LoginArguments _$LoginArgumentsFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$LoginArgumentsToJson(LoginArguments instance) =>
+    <String, dynamic>{
+      'input': instance.input?.toJson(),
+    };
+
+Accounts _$AccountsFromJson(Map<String, dynamic> json) {
+  return Accounts()
+    ..getAccounts = (json['getAccounts'] as List)
+        ?.map((e) =>
+            e == null ? null : Account.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+Map<String, dynamic> _$AccountsToJson(Accounts instance) => <String, dynamic>{
+      'getAccounts': instance.getAccounts?.map((e) => e?.toJson())?.toList(),
+    };
+
+Account _$AccountFromJson(Map<String, dynamic> json) {
+  return Account()
+    ..accountId = json['accountId'] as String
+    ..accountType = json['accountType'] == null
+        ? null
+        : AccountType.fromJson(json['accountType'] as Map<String, dynamic>)
+    ..balance = json['balance'] as int
+    ..institutionName = json['institutionName'] as String;
+}
+
+Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
+      'accountId': instance.accountId,
+      'accountType': instance.accountType?.toJson(),
+      'balance': instance.balance,
+      'institutionName': instance.institutionName,
+    };
+
+AccountType _$AccountTypeFromJson(Map<String, dynamic> json) {
+  return AccountType()..status = json['status'] as String;
+}
+
+Map<String, dynamic> _$AccountTypeToJson(AccountType instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+    };
+
+GetAccountsInput _$GetAccountsInputFromJson(Map<String, dynamic> json) {
+  return GetAccountsInput()..sessionId = json['sessionId'] as String;
+}
+
+Map<String, dynamic> _$GetAccountsInputToJson(GetAccountsInput instance) =>
+    <String, dynamic>{
+      'sessionId': instance.sessionId,
+    };
+
+AccountsArguments _$AccountsArgumentsFromJson(Map<String, dynamic> json) {
+  return AccountsArguments(
+    input: json['input'] == null
+        ? null
+        : GetAccountsInput.fromJson(json['input'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$AccountsArgumentsToJson(AccountsArguments instance) =>
     <String, dynamic>{
       'input': instance.input?.toJson(),
     };

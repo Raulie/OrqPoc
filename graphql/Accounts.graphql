@@ -1,0 +1,10 @@
+query Accounts ($input: GetAccountsInput!){
+    getAccounts(input: $input) {
+        accountId
+        accountType {
+            status
+        }
+        balance
+        institutionName
+    }
+}

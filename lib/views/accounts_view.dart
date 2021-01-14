@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:orq_poc/graphql_api.dart';
 import 'package:orq_poc/widgets/account_tile.dart';
 
-class AccountsView extends StatefulWidget {
-  @override
-  _AccountsViewState createState() => _AccountsViewState();
-}
+class AccountsView extends StatelessWidget {
+  static const routeName = '/accounts';
 
-class _AccountsViewState extends State<AccountsView> {
-  List<Account> accounts = [
-    Account(
-      amount: '\$50.00',
-      name: 'MultiCuenta Popular',
-      number: 'x5484',
-    ),
-    Account(
-      amount: '\$35,450.85',
-      name: 'Ahorro Popular',
-      number: 'x8957',
-    ),
-  ];
   @override
   Widget build(BuildContext context) {
+    final AccountsViewArguments args =
+        ModalRoute.of(context).settings.arguments;
+
+    var queryInput = GetAccountsInput();
+    queryInput.sessionId = args.sessionId;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Accounts'),
@@ -31,28 +24,54 @@ class _AccountsViewState extends State<AccountsView> {
           bottom: true,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              elevation: 10,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    for (int i = 0; i < accounts.length; i++)
-                      AccountTile(
-                        account: accounts[i],
-                        separator: i != 0,
-                      )
-                  ],
-                ),
+            child: Query(
+              options: QueryOptions(
+                documentNode: AccountsQuery().document,
+                variables: AccountsArguments(input: queryInput).toJson(),
               ),
+              builder: (
+                QueryResult result, {
+                Future<QueryResult> Function() refetch,
+                FetchMore fetchMore,
+              }) {
+                if (result.loading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                final accounts = Accounts.fromJson(result.data).getAccounts;
+
+                return Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  elevation: 10,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        for (int i = 0; i < accounts.length; i++)
+                          AccountTile(
+                            account: accounts[i],
+                            separator: i != 0,
+                          )
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ),
       ),
     );
   }
+}
+
+class AccountsViewArguments {
+  final String sessionId;
+
+  AccountsViewArguments({this.sessionId});
 }

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => LoginView(),
-          '/accounts': (context) => AccountsView(),
+          AccountsView.routeName: (context) => AccountsView(),
         },
         theme: ThemeData(
           primarySwatch: Colors.blue,

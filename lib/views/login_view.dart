@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:orq_poc/graphql_api.dart';
 import 'package:orq_poc/providers/graphql_provider.dart';
+import 'package:orq_poc/views/accounts_view.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
@@ -75,6 +76,8 @@ class _LoginViewState extends State<LoginView> {
                           children: <Widget>[
                             TextField(
                               decoration: InputDecoration(hintText: 'Username'),
+                              autocorrect: false,
+                              enableSuggestions: false,
                               onChanged: (input) {
                                 username = input.trim();
                               },
@@ -179,11 +182,19 @@ class _LoginViewState extends State<LoginView> {
             }
           },
           onCompleted: (dynamic resultData) {
-            print(resultData);
-
             setState(() {
               buttonState = ButtonState.idle;
             });
+
+            if (Login.fromJson(resultData).loginArmando != null) {
+              final sessionId = Login.fromJson(resultData).loginArmando.id;
+
+              Navigator.pushNamed(
+                context,
+                '/accounts',
+                arguments: AccountsViewArguments(sessionId: sessionId),
+              );
+            }
           }),
     );
   }

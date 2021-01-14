@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:orq_poc/graphql_api.dart';
 
 /// Represents a Retiro Movil Withdrawal Tile
 class AccountTile extends StatelessWidget {
@@ -18,7 +20,7 @@ class AccountTile extends StatelessWidget {
           Row(
             children: [
               Text(
-                account.name,
+                account.institutionName,
                 style: TextStyle(
                   color: Color(0xFF001D3B),
                   fontWeight: FontWeight.bold,
@@ -27,7 +29,7 @@ class AccountTile extends StatelessWidget {
               ),
               SizedBox(width: 6),
               Text(
-                account.number,
+                account.accountType.status,
                 style: TextStyle(
                   color: Color(0xFF20385C),
                   fontSize: 13,
@@ -37,7 +39,7 @@ class AccountTile extends StatelessWidget {
           ),
           SizedBox(height: 2),
           Text(
-            account.amount,
+            NumberFormat.simpleCurrency().format(account.balance),
             style: TextStyle(
               color: Color(0xFF2278C9),
               fontSize: 24,
@@ -55,16 +57,8 @@ class AccountTile extends StatelessWidget {
       child: Container(
         height: 1,
         width: double.infinity,
-        color: Colors.grey[300],
+        color: Colors.grey[500],
       ),
     );
   }
-}
-
-class Account {
-  final String name;
-  final String number;
-  final String amount;
-
-  Account({this.name, this.number, this.amount});
 }

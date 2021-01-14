@@ -12,10 +12,10 @@ class Login with EquatableMixin {
 
   factory Login.fromJson(Map<String, dynamic> json) => _$LoginFromJson(json);
 
-  Session login;
+  Session loginArmando;
 
   @override
-  List<Object> get props => [login];
+  List<Object> get props => [loginArmando];
   Map<String, dynamic> toJson() => _$LoginToJson(this);
 }
 
@@ -82,7 +82,7 @@ class LoginQuery extends GraphQLQuery<Login, LoginArguments> {
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-              name: NameNode(value: 'login'),
+              name: NameNode(value: 'loginArmando'),
               alias: null,
               arguments: [
                 ArgumentNode(
@@ -111,4 +111,155 @@ class LoginQuery extends GraphQLQuery<Login, LoginArguments> {
   List<Object> get props => [document, operationName, variables];
   @override
   Login parse(Map<String, dynamic> json) => Login.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Accounts with EquatableMixin {
+  Accounts();
+
+  factory Accounts.fromJson(Map<String, dynamic> json) =>
+      _$AccountsFromJson(json);
+
+  List<Account> getAccounts;
+
+  @override
+  List<Object> get props => [getAccounts];
+  Map<String, dynamic> toJson() => _$AccountsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Account with EquatableMixin {
+  Account();
+
+  factory Account.fromJson(Map<String, dynamic> json) =>
+      _$AccountFromJson(json);
+
+  String accountId;
+
+  AccountType accountType;
+
+  int balance;
+
+  String institutionName;
+
+  @override
+  List<Object> get props => [accountId, accountType, balance, institutionName];
+  Map<String, dynamic> toJson() => _$AccountToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AccountType with EquatableMixin {
+  AccountType();
+
+  factory AccountType.fromJson(Map<String, dynamic> json) =>
+      _$AccountTypeFromJson(json);
+
+  String status;
+
+  @override
+  List<Object> get props => [status];
+  Map<String, dynamic> toJson() => _$AccountTypeToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GetAccountsInput with EquatableMixin {
+  GetAccountsInput();
+
+  factory GetAccountsInput.fromJson(Map<String, dynamic> json) =>
+      _$GetAccountsInputFromJson(json);
+
+  String sessionId;
+
+  @override
+  List<Object> get props => [sessionId];
+  Map<String, dynamic> toJson() => _$GetAccountsInputToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AccountsArguments extends JsonSerializable with EquatableMixin {
+  AccountsArguments({this.input});
+
+  factory AccountsArguments.fromJson(Map<String, dynamic> json) =>
+      _$AccountsArgumentsFromJson(json);
+
+  final GetAccountsInput input;
+
+  @override
+  List<Object> get props => [input];
+  Map<String, dynamic> toJson() => _$AccountsArgumentsToJson(this);
+}
+
+class AccountsQuery extends GraphQLQuery<Accounts, AccountsArguments> {
+  AccountsQuery({this.variables});
+
+  @override
+  final DocumentNode document = DocumentNode(definitions: [
+    OperationDefinitionNode(
+        type: OperationType.query,
+        name: NameNode(value: 'Accounts'),
+        variableDefinitions: [
+          VariableDefinitionNode(
+              variable: VariableNode(name: NameNode(value: 'input')),
+              type: NamedTypeNode(
+                  name: NameNode(value: 'GetAccountsInput'), isNonNull: true),
+              defaultValue: DefaultValueNode(value: null),
+              directives: [])
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+              name: NameNode(value: 'getAccounts'),
+              alias: null,
+              arguments: [
+                ArgumentNode(
+                    name: NameNode(value: 'input'),
+                    value: VariableNode(name: NameNode(value: 'input')))
+              ],
+              directives: [],
+              selectionSet: SelectionSetNode(selections: [
+                FieldNode(
+                    name: NameNode(value: 'accountId'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null),
+                FieldNode(
+                    name: NameNode(value: 'accountType'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                          name: NameNode(value: 'status'),
+                          alias: null,
+                          arguments: [],
+                          directives: [],
+                          selectionSet: null)
+                    ])),
+                FieldNode(
+                    name: NameNode(value: 'balance'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null),
+                FieldNode(
+                    name: NameNode(value: 'institutionName'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null)
+              ]))
+        ]))
+  ]);
+
+  @override
+  final String operationName = 'Accounts';
+
+  @override
+  final AccountsArguments variables;
+
+  @override
+  List<Object> get props => [document, operationName, variables];
+  @override
+  Accounts parse(Map<String, dynamic> json) => Accounts.fromJson(json);
 }
